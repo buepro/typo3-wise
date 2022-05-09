@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<xliff version="1.0">
+	<file source-language="en" datatype="plaintext" original="messages" date="2022-05-04T09:11:39Z"
+		  product-name="wise">
+		<header/>
+		<body>
+			<trans-unit id="tx_wise_domain_model_event" resname="tx_wise_domain_model_event">
+				<source>Event</source>
+			</trans-unit>
+			<trans-unit id="tx_wise_domain_model_event.delivery_id" resname="tx_wise_domain_model_event.delivery_id">
+				<source>Delivery ID</source>
+			</trans-unit>
+			<trans-unit id="tx_wise_domain_model_event.id" resname="tx_wise_domain_model_event.id">
+				<source>ID</source>
+			</trans-unit>
+			<trans-unit id="tx_wise_domain_model_event.profile_id" resname="tx_wise_domain_model_event.profile_id">
+				<source>Profile ID</source>
+			</trans-unit>
+			<trans-unit id="tx_wise_domain_model_event.amount" resname="tx_wise_domain_model_event.amount">
+				<source>Amount</source>
+			</trans-unit>
+			<trans-unit id="tx_wise_domain_model_event.currency" resname="tx_wise_domain_model_event.currency">
+				<source>Currency</source>
+			</trans-unit>
+			<trans-unit id="tx_wise_domain_model_event.post_transaction_balance_amount" resname="tx_wise_domain_model_event.post_transaction_balance_amount">
+				<source>Post transaction balance amount</source>
+			</trans-unit>
+			<trans-unit id="tx_wise_domain_model_event.occurred_at" resname="tx_wise_domain_model_event.occurred_at">
+				<source>Occured at</source>
+			</trans-unit>
+			<trans-unit id="tx_wise_domain_model_credit" resname="tx_wise_domain_model_credit">
+				<source>Credit</source>
+			</trans-unit>
+			<trans-unit id="tx_wise_domain_model_credit.palette.details" resname="tx_wise_domain_model_credit.palette.details">
+				<source>Details</source>
+			</trans-unit>
+			<trans-unit id="tx_wise_domain_model_credit.reference_number" resname="tx_wise_domain_model_credit.reference_number">
+				<source>Reference number</source>
+			</trans-unit>
+			<trans-unit id="tx_wise_domain_model_credit.date" resname="tx_wise_domain_model_credit.date">
+				<source>Date</source>
+			</trans-unit>
+			<trans-unit id="tx_wise_domain_model_credit.amount_value" resname="tx_wise_domain_model_credit.amount_value">
+				<source>Amount</source>
+			</trans-unit>
+			<trans-unit id="tx_wise_domain_model_credit.amount_currency" resname="tx_wise_domain_model_credit.amount_currency">
+				<source>Currency</source>
+			</trans-unit>
+			<trans-unit id="tx_wise_domain_model_credit.total_fees_value" resname="tx_wise_domain_model_credit.total_fees_value">
+				<source>Total fees</source>
+			</trans-unit>
+			<trans-unit id="tx_wise_domain_model_credit.total_fees_currency" resname="tx_wise_domain_model_credit.total_fees_currency">
+				<source>Currency</source>
+			</trans-unit>
+			<trans-unit id="tx_wise_domain_model_credit.details_type" resname="tx_wise_domain_model_credit.details_type">
+				<source>Type</source>
+			</trans-unit>
+			<trans-unit id="tx_wise_domain_model_credit.details_description" resname="tx_wise_domain_model_credit.details_description">
+				<source>Description</source>
+			</trans-unit>
+			<trans-unit id="tx_wise_domain_model_credit.details_sender_name" resname="tx_wise_domain_model_credit.details_sender_name">
+				<source>Sender name</source>
+			</trans-unit>
+			<trans-unit id="tx_wise_domain_model_credit.details_sender_account" resname="tx_wise_domain_model_credit.details_sender_account">
+				<source>Sender account</source>
+			</trans-unit>
+			<trans-unit id="tx_wise_domain_model_credit.details_payment_reference" resname="tx_wise_domain_model_credit.details_payment_reference">
+				<source>Payment reference</source>
+			</trans-unit>
+			<trans-unit id="tx_wise_domain_model_credit.exchange_details" resname="tx_wise_domain_model_credit.exchange_details">
+				<source>Exchange details</source>
+			</trans-unit>
+			<trans-unit id="tx_wise_domain_model_credit.running_balance_value" resname="tx_wise_domain_model_credit.running_balance_value">
+				<source>Running balance value</source>
+			</trans-unit>
+			<trans-unit id="tx_wise_domain_model_credit.running_balance_currency" resname="tx_wise_domain_model_credit.running_balance_currency">
+				<source>Running balance currency</source>
+			</trans-unit>
+			<trans-unit id="tx_wise_domain_model_credit.event" resname="tx_wise_domain_model_credit.event">
+				<source>Event</source>
+			</trans-unit>
+		</body>
+	</file>
+</xliff>

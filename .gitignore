@@ -1,0 +1,10 @@
+# Folders
+.build/
+.idea/
+Documentation-GENERATED-temp/
+Build/site/wise/
+
+# Files
+*.cache
+*.zip
+Build/node_modules

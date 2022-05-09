@@ -1,0 +1,137 @@
+{
+  "accountHolder": {
+    "type": "PERSONAL",
+    "address": {
+      "addressFirstLine": "Veerenni 24",
+      "city": "Tallinn",
+      "postCode": "12112",
+      "stateCode": "",
+      "countryName": "Estonia"
+    },
+    "firstName": "Oliver",
+    "lastName": "Wilson"
+  },
+  "issuer": {
+    "name": "TransferWise Ltd.",
+    "firstLine": "56 Shoreditch High Street",
+    "city": "London",
+    "postCode": "E1 6JJ",
+    "stateCode": "",
+    "country": "United Kingdom"
+  },
+  "bankDetails": null,
+  "transactions": [
+    {
+      "type": "DEBIT",
+      "date": "2018-04-30T08:47:05.832Z",
+      "amount": {
+        "value": -7.76,
+        "currency": "EUR"
+      },
+      "totalFees": {
+        "value": 0.04,
+        "currency": "EUR"
+      },
+      "details": {
+        "type": "CARD",
+        "description": "Card transaction of 6.80 GBP issued by Tfl.gov.uk/cp TFL TRAVEL CH",
+        "amount": {
+          "value": 6.8,
+          "currency": "GBP"
+        },
+        "category": "Transportation Suburban and Loca",
+        "merchant": {
+          "name": "Tfl.gov.uk/cp",
+          "firstLine": null,
+          "postCode": "SW1H 0TL  ",
+          "city": "TFL TRAVEL CH",
+          "state": "   ",
+          "country": "GB",
+          "category": "Transportation Suburban and Loca"
+        }
+      },
+      "exchangeDetails": {
+        "forAmount": {
+          "value": 6.8,
+          "currency": "GBP"
+        },
+        "rate": null
+      },
+      "runningBalance": {
+        "value": 16.01,
+        "currency": "EUR"
+      },
+      "referenceNumber": "CARD-249281"
+    },
+    {
+      "type": "CREDIT",
+      "date": "2018-04-17T07:47:00.227Z",
+      "amount": {
+        "value": 200,
+        "currency": "EUR"
+      },
+      "totalFees": {
+        "value": 0,
+        "currency": "EUR"
+      },
+      "details": {
+        "type": "DEPOSIT",
+        "description": "Received money from HEIN LAURI with reference SVWZ+topup card",
+        "senderName": "HEIN LAURI",
+        "senderAccount": "EE76 1700 0170 0049 6704 ",
+        "paymentReference": "SVWZ+topup card"
+      },
+      "exchangeDetails": null,
+      "runningBalance": {
+        "value": 207.69,
+        "currency": "EUR"
+      },
+      "referenceNumber": "TRANSFER-34188888"
+    },
+    {
+      "type": "CREDIT",
+      "date": "2018-04-10T05:58:34.681Z",
+      "amount": {
+        "value": 9.94,
+        "currency": "EUR"
+      },
+      "totalFees": {
+        "value": 0,
+        "currency": "EUR"
+      },
+      "details": {
+        "type": "CONVERSION",
+        "description": "Converted 8.69 GBP to 9.94 EUR",
+        "sourceAmount": {
+          "value": 8.69,
+          "currency": "GBP"
+        },
+        "targetAmount": {
+          "value": 9.94,
+          "currency": "EUR"
+        },
+        "fee": {
+          "value": 0.03,
+          "currency": "GBP"
+        },
+        "rate": 1.147806
+      },
+      "exchangeDetails": null,
+      "runningBalance": {
+        "value": 9.94,
+        "currency": "EUR"
+      },
+      "referenceNumber": "CONVERSION-1511237"
+    }
+  ],
+  "endOfStatementBalance": {
+    "value": 9.94,
+    "currency": "EUR"
+  },
+  "query": {
+    "intervalStart": "2018-03-01T00:00:00Z",
+    "intervalEnd": "2018-04-30T23:59:59.999Z",
+    "currency": "EUR",
+    "accountId": 64
+  }
+}

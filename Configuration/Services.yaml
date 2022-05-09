@@ -1,0 +1,21 @@
+services:
+  _defaults:
+    autowire: true
+    autoconfigure: true
+    public: false
+
+  Buepro\Wise\:
+    resource: '../Classes/*'
+
+  Buepro\Wise\Controller\EventController:
+    public: true
+  Buepro\Wise\Service\EventService:
+    public: true
+  Buepro\Wise\Api\Client:
+    public: true
+
+  Buepro\Wise\Command\GetCreditsCommand:
+    tags:
+      - name: 'console.command'
+        command: 'wise:getcredits'
+        description: 'Get the latest balance credits from a wise account.'

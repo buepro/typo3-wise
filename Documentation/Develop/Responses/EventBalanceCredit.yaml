@@ -1,0 +1,18 @@
+{
+  "data": {
+    "resource": {
+      "type": "balance-account",
+      "id": 111,
+      "profile_id": 222
+    },
+    "transaction_type": "credit",
+    "amount": 1.23,
+    "currency": "EUR",
+    "post_transaction_balance_amount": 2.34,
+    "occurred_at": "2020-01-01T12:34:56Z"
+  },
+  "subscription_id": "01234567-89ab-cdef-0123-456789abcdef",
+  "event_type": "balances#credit",
+  "schema_version": "2.0.0",
+  "sent_at": "2020-01-01T12:34:56Z"
+}
