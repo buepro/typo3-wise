@@ -13,12 +13,14 @@ use Buepro\Wise\Api\Client;
 use Buepro\Wise\Domain\Model\Event;
 use Buepro\Wise\Domain\Repository\CreditRepository;
 use Buepro\Wise\Domain\Repository\EventRepository;
+use Buepro\Wise\Event\AfterAddingCreditsEvent;
 use Buepro\Wise\Service\CreditService;
 use Buepro\Wise\Utility\ApiUtility;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
+use TYPO3\CMS\Core\EventDispatcher\EventDispatcher;
 use TYPO3\CMS\Core\Site\SiteFinder;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
@@ -27,6 +29,7 @@ class GetCreditsCommand extends Command
     protected EventRepository $eventRepository;
     protected CreditRepository $creditRepository;
     protected CreditService $creditService;
+    protected EventDispatcher $eventDispatcher;
 
     public function injectEventRepository(EventRepository $eventRepository): void
     {
@@ -41,6 +44,11 @@ class GetCreditsCommand extends Command
     public function injectCreditService(CreditService $creditService): void
     {
         $this->creditService = $creditService;
+    }
+
+    public function injectEventDispatcher(EventDispatcher $eventDispatcher): void
+    {
+        $this->eventDispatcher = $eventDispatcher;
     }
 
     protected function configure(): void
@@ -70,7 +78,11 @@ class GetCreditsCommand extends Command
                 $this->creditService->processTransactions($transactions, $unreferencedEvents, $site);
             }
         }
-        $this->creditService->persistAll();
+
+        if (count($addedCredits = $this->creditService->getAddedCredits()) > 0) {
+            $this->creditService->persistAll();
+            $this->eventDispatcher->dispatch((new AfterAddingCreditsEvent($addedCredits)));
+        }
 
         $io->writeln(sprintf(
             '%d credits added.',

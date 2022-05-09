@@ -6,6 +6,8 @@
 Develop
 =======
 
+This chapter is of interest when developing this extension further.
+
 Site
 ====
 
