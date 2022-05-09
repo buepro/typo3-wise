@@ -12,6 +12,7 @@ declare(strict_types=1);
 namespace Buepro\Wise\Controller;
 
 use Buepro\Wise\Domain\Repository\EventRepository;
+use Buepro\Wise\Service\CommandService;
 use Buepro\Wise\Service\EventService;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
@@ -39,6 +40,7 @@ class EventController
             $this->eventRepository->add($event);
             GeneralUtility::makeInstance(PersistenceManager::class)->persistAll();
         }
+        (new CommandService())->getCreditsInBackground();
         return $this->getConfirmationResponse();
     }
 

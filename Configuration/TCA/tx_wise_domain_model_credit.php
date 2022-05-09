@@ -16,7 +16,7 @@ return [
         'tstamp' => 'tstamp',
         'crdate' => 'crdate',
         'delete' => 'deleted',
-        'default_sortby' => 'event ASC, uid DESC',
+        'default_sortby' => 'uid DESC',
         'searchFields' => 'reference_number, amount_value, running_balance_value',
         'iconfile' => 'EXT:wise/Resources/Public/Icons/Credit.svg',
     ],
