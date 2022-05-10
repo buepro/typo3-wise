@@ -24,8 +24,11 @@
 TYPO3 extension ``wise``
 ========================
 
-Register credit transactions received at wise by handling events and using the
-API.
+Use this extension to register and process credit transactions from a wise
+account. With the provided event handler or a cron job the latest credit
+transactions can be automatically pulled into your TYPO3 instance. Once new
+credit transactions have been added an event for further processing is
+dispatched.
 
 :Repository:  https://github.com/buepro/typo3-wise
 :Read online: https://docs.typo3.org/p/buepro/typo3-wise/main/en-us/

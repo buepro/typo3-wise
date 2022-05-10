@@ -9,7 +9,7 @@
 
 $EM_CONF[$_EXTKEY] = [
     'title'            => 'Wise',
-    'description'      => 'Register credit transactions received at wise by handling events and using the API.',
+    'description'      => 'Extension to register and process credit transactions from a wise account.',
     'category'         => 'backend',
     'version'          => '0.1.0',
     'state'            => 'alpha',

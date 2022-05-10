@@ -1,6 +1,6 @@
 {
 	"name": "buepro/typo3-wise",
-	"description": "Register credit transactions received at wise by handling events and using the API.",
+	"description": "Extension to register and process credit transactions from a wise account.",
 	"license": "GPL-2.0-or-later",
 	"type": "typo3-cms-extension",
 	"keywords": [
