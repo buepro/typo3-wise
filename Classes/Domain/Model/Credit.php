@@ -17,6 +17,7 @@ class Credit extends AbstractEntity
 {
     protected string $referenceNumber = '';
     protected string $date = '';
+    protected int $dateProcessed = 0;
     protected float $amountValue = 0.0;
     protected string $amountCurrency = '';
     protected float $totalFeesValue = 0.0;
@@ -51,6 +52,17 @@ class Credit extends AbstractEntity
     public function getDate(): string
     {
         return $this->date;
+    }
+
+    public function setDateProcessed(int $dateProcessed): self
+    {
+        $this->dateProcessed = $dateProcessed;
+        return $this;
+    }
+
+    public function getDateProcessed(): int
+    {
+        return $this->dateProcessed;
     }
 
     public function setAmountValue(float $amountValue): self

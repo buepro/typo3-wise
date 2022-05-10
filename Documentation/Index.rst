@@ -37,4 +37,5 @@ Wise
    Introduction/Index
    Administration/Index
    User/Index
+   Integration/Index
    Develop/Index

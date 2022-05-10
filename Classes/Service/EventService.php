@@ -60,6 +60,7 @@ class EventService
                 ->setId((int)($data['resource']['id'] ?? ''))
                 ->setProfileId((int)($data['resource']['profile_id'] ?? ''))
                 ->setOccurredAt((string)($data['occurred_at'] ?? ''))
+                ->setOccurredAtProcessed((new \DateTime($data['occurred_at']))->getTimestamp())
                 ->setCurrency((string)($data['currency'] ?? ''))
                 ->setAmount((float)($data['amount'] ?? 0.0))
                 ->setPostTransactionBalanceAmount((float)($data['post_transaction_balance_amount'] ?? 0.0))

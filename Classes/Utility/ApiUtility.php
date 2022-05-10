@@ -20,44 +20,8 @@ class ApiUtility
         }
     }
 
-    public static function getTimestampFromDateTimeString(string $dateTimeString): int
-    {
-        if (($dateTime = \DateTime::createFromFormat(\DateTimeInterface::RFC3339, $dateTimeString)) !== false) {
-            return $dateTime->getTimestamp();
-        }
-        return 0;
-    }
-
     public static function getDateTimeStringFromTimestamp(int $timestamp): string
     {
         return gmdate('Y-m-d\TH:i:s.v\Z', $timestamp);
-    }
-
-    public static function getMinTimeFromObjects(array $elements, string $method): int
-    {
-        $min = 0;
-        foreach ($elements as $element) {
-            if (!is_object($element) || !method_exists($element, $method)) {
-                continue;
-            }
-            // @phpstan-ignore-next-line
-            $time = self::getTimestampFromDateTimeString($element->$method());
-            $min = $min === 0 || $time < $min ? $time : $min;
-        }
-        return $min;
-    }
-
-    public static function getMaxTimeFromObjects(array $elements, string $method): int
-    {
-        $max = 0;
-        foreach ($elements as $element) {
-            if (!is_object($element) || !method_exists($element, $method)) {
-                continue;
-            }
-            // @phpstan-ignore-next-line
-            $time = self::getTimestampFromDateTimeString($element->$method());
-            $max = $max === 0 || $time > $max ? $time : $max;
-        }
-        return $max;
     }
 }

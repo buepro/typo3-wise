@@ -22,6 +22,7 @@ class Event extends AbstractEntity
     protected string $currency = 'EUR';
     protected float $postTransactionBalanceAmount = 0.0;
     protected string $occurredAt = '';
+    protected int $occurredAtProcessed = 0;
 
     public function setDeliveryId(string $deliveryId): self
     {
@@ -98,5 +99,16 @@ class Event extends AbstractEntity
     public function getOccurredAt(): string
     {
         return $this->occurredAt;
+    }
+
+    public function setOccurredAtProcessed(int $occurredAtProcessed): self
+    {
+        $this->occurredAtProcessed = $occurredAtProcessed;
+        return $this;
+    }
+
+    public function getOccurredAtProcessed(): int
+    {
+        return $this->occurredAtProcessed;
     }
 }

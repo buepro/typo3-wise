@@ -16,12 +16,12 @@ return [
         'tstamp' => 'tstamp',
         'crdate' => 'crdate',
         'delete' => 'deleted',
-        'default_sortby' => 'uid DESC',
+        'default_sortby' => 'date_processed DESC, uid DESC',
         'searchFields' => 'reference_number, amount_value, running_balance_value',
         'iconfile' => 'EXT:wise/Resources/Public/Icons/Credit.svg',
     ],
     'palettes' => [
-        'reference' => ['showitem' => 'reference_number, date'],
+        'reference' => ['showitem' => 'reference_number, date, date_processed'],
         'amount' => ['showitem' => 'amount_value, amount_currency'],
         'fees' => ['showitem' => 'total_fees_value, total_fees_currency'],
         'details' => [
@@ -49,6 +49,15 @@ return [
             'config' => [
                 'type' => 'input',
                 'eval' => 'trim',
+                'readOnly' => 1,
+            ],
+        ],
+        'date_processed' => [
+            'label' => 'LLL:EXT:wise/Resources/Private/Language/locallang_db.xlf:tx_wise_domain_model_credit.date_processed',
+            'config' => [
+                'type' => 'input',
+                'renderType' => 'inputDateTime',
+                'eval' => 'datetime',
                 'readOnly' => 1,
             ],
         ],

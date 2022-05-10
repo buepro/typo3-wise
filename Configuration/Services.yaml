@@ -18,4 +18,3 @@ services:
     tags:
       - name: 'console.command'
         command: 'wise:getcredits'
-        description: 'Get the latest balance credits from a wise account.'

@@ -10,17 +10,18 @@
 namespace Buepro\Wise\Command;
 
 use Buepro\Wise\Api\Client;
-use Buepro\Wise\Domain\Model\Event;
 use Buepro\Wise\Domain\Repository\CreditRepository;
 use Buepro\Wise\Domain\Repository\EventRepository;
 use Buepro\Wise\Event\AfterAddingCreditsEvent;
 use Buepro\Wise\Service\CreditService;
-use Buepro\Wise\Utility\ApiUtility;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 use TYPO3\CMS\Core\EventDispatcher\EventDispatcher;
+use TYPO3\CMS\Core\Exception;
+use TYPO3\CMS\Core\Site\Entity\Site;
 use TYPO3\CMS\Core\Site\SiteFinder;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
@@ -53,29 +54,72 @@ class GetCreditsCommand extends Command
 
     protected function configure(): void
     {
-        $this->setHelp('Get the latest balance credits from a wise account.');
+        $this
+            ->setDescription(
+                'Get credit transactions from a wise account. In case no option is used
+transactions for one month back and all sites are obtained. By default the period
+for which transactions are received is one month. Use the options "from" and "to"
+to adjust the period. Note that the maximal period length is limited by the wise API.'
+            )
+            ->addOption(
+                'from',
+                'f',
+                InputOption::VALUE_REQUIRED,
+                'Date defining from when on credit transactions should be
+obtained. The PHP function "strtotime" is used to get
+the timestamp.'
+            )
+            ->addOption(
+                'to',
+                't',
+                InputOption::VALUE_REQUIRED,
+                'Date defining upto when credit transactions should be
+obtained. The PHP function "strtotime" is used to get
+the timestamp.'
+            )
+            ->addOption(
+                'site',
+                's',
+                InputOption::VALUE_REQUIRED,
+                'Site identifier from the site for which credit transactions
+should be obtained.'
+            )
+            ->addOption(
+                'profile-id',
+                'p',
+                InputOption::VALUE_REQUIRED,
+                "Profile-ID for which credit transactions should be received.
+If not used profile id's are obtained by the registered events."
+            );
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $io = new SymfonyStyle($input, $output);
-        $io->writeln('Getting the latest credit notes...');
+        $io->writeln('Getting the latest credit transactions...');
 
-        $siteFinder = GeneralUtility::makeInstance(SiteFinder::class);
-        $sites = $siteFinder->getAllSites();
+        if (($sites = $this->getSites($input, $io)) === null) {
+            return Command::INVALID;
+        }
+
         foreach ($sites as $site) {
             $unreferencedEvents = $this->eventRepository->findAllUnreferenced($site);
-            $profileIds = array_unique(array_map(static fn (Event $event) => $event->getProfileId(), $unreferencedEvents));
+            $profileIds = $this->eventRepository->findAllProfileIds($site);
+            $from = $this->getFromTimestamp($input);
+            $to = $this->getToTimestamp($input);
+
+            if (($profileId = $input->getOption('profile-id')) !== null) {
+                $profileIds = [$profileId];
+            }
+
+            // @phpstan-ignore-next-line
             foreach ($profileIds as $profileId) {
                 $apiClient = (GeneralUtility::makeInstance(Client::class))->initialize($site, $profileId);
-                $balanceAccountStatement = $apiClient->getBalanceAccountStatement(
-                    ApiUtility::getMinTimeFromObjects($unreferencedEvents, 'getOccurredAt'),
-                    ApiUtility::getMaxTimeFromObjects($unreferencedEvents, 'getOccurredAt')
-                );
+                $balanceAccountStatement = $apiClient->getBalanceAccountStatement($from, $to);
                 if (!is_array($transactions = $balanceAccountStatement['transactions'] ?? null)) {
                     continue;
                 }
-                $this->creditService->processTransactions($transactions, $unreferencedEvents, $site);
+                $this->creditService->processTransactions($transactions, $site, $unreferencedEvents);
             }
         }
 
@@ -89,5 +133,61 @@ class GetCreditsCommand extends Command
             count($this->creditService->getAddedCredits())
         ));
         return Command::SUCCESS;
+    }
+
+    /** @return ?Site[] */
+    protected function getSites(InputInterface $input, SymfonyStyle $io): ?array
+    {
+        $siteFinder = GeneralUtility::makeInstance(SiteFinder::class);
+        $sites = $siteFinder->getAllSites();
+        if (count($sites) === 0) {
+            $io->writeln('<error>No site available.</error>');
+            return null;
+        }
+        if (($siteOption = $input->getOption('site')) !== null) {
+            $sites = [];
+            try {
+                $site = $siteFinder->getSiteByIdentifier($siteOption);
+                $sites[] = $site;
+            } catch (Exception $e) {
+                $io->writeln('<error>The site "' . $siteOption . '" is not available.</error>');
+                return null;
+            }
+        }
+        return $sites;
+    }
+
+    protected function getFromTimestamp(InputInterface $input): int
+    {
+        if (
+            ($fromDate = $input->getOption('from')) !== null &&
+            ($timestamp = strtotime($fromDate)) !== false
+        ) {
+            return $timestamp;
+        }
+        if (
+            ($toDate = $input->getOption('to')) !== null &&
+            ($timestamp = strtotime($toDate)) !== false
+        ) {
+            return ((new \DateTime)->setTimestamp($timestamp))->sub(new \DateInterval('P1M'))->getTimestamp();
+        }
+        return (new \DateTime('now'))->sub(new \DateInterval('P1M'))->getTimestamp();
+    }
+
+    protected function getToTimestamp(InputInterface $input): int
+    {
+        if (
+            ($toDate = $input->getOption('to')) !== null &&
+            ($timestamp = strtotime($toDate)) !== false
+        ) {
+            return $timestamp;
+        }
+        if (
+            ($fromDate = $input->getOption('from')) !== null &&
+            ($timestamp = strtotime($fromDate)) !== false
+        ) {
+            return ((new \DateTime)->setTimestamp($timestamp))->add(new \DateInterval('P1M'))->getTimestamp();
+        }
+        return (new \DateTime('now'))->getTimestamp();
     }
 }

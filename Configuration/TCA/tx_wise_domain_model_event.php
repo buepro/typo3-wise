@@ -16,12 +16,13 @@ return [
         'tstamp' => 'tstamp',
         'crdate' => 'crdate',
         'delete' => 'deleted',
-        'default_sortby' => 'uid DESC',
+        'default_sortby' => 'occurred_at_processed DESC, uid desc',
         'searchFields' => 'amount, post_transaction_balance_amount',
         'iconfile' => 'EXT:wise/Resources/Public/Icons/Event.svg'
     ],
     'types' => [
-        '1' => ['showitem' => 'delivery_id, id, profile_id, currency, amount, post_transaction_balance_amount, occurred_at'],
+        '1' => ['showitem' => 'delivery_id, id, profile_id, occurred_at, occurred_at_processed, currency, amount, ' .
+            'post_transaction_balance_amount'],
     ],
     'columns' => [
         'delivery_id' => [
@@ -48,6 +49,23 @@ return [
                 'readOnly' => 1,
             ],
         ],
+        'occurred_at' => [
+            'label' => 'LLL:EXT:wise/Resources/Private/Language/locallang_db.xlf:tx_wise_domain_model_event.occurred_at',
+            'config' => [
+                'type' => 'input',
+                'eval' => 'trim',
+                'readOnly' => 1,
+            ],
+        ],
+        'occurred_at_processed' => [
+            'label' => 'LLL:EXT:wise/Resources/Private/Language/locallang_db.xlf:tx_wise_domain_model_event.occurred_at_processed',
+            'config' => [
+                'type' => 'input',
+                'renderType' => 'inputDateTime',
+                'eval' => 'datetime',
+                'readOnly' => 1,
+            ],
+        ],
         'amount' => [
             'label' => 'LLL:EXT:wise/Resources/Private/Language/locallang_db.xlf:tx_wise_domain_model_event.amount',
             'config' => [
@@ -66,14 +84,6 @@ return [
         ],
         'post_transaction_balance_amount' => [
             'label' => 'LLL:EXT:wise/Resources/Private/Language/locallang_db.xlf:tx_wise_domain_model_event.post_transaction_balance_amount',
-            'config' => [
-                'type' => 'input',
-                'eval' => 'trim',
-                'readOnly' => 1,
-            ],
-        ],
-        'occurred_at' => [
-            'label' => 'LLL:EXT:wise/Resources/Private/Language/locallang_db.xlf:tx_wise_domain_model_event.occurred_at',
             'config' => [
                 'type' => 'input',
                 'eval' => 'trim',

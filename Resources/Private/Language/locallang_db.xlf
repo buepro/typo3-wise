@@ -28,6 +28,9 @@
 			<trans-unit id="tx_wise_domain_model_event.occurred_at" resname="tx_wise_domain_model_event.occurred_at">
 				<source>Occured at</source>
 			</trans-unit>
+			<trans-unit id="tx_wise_domain_model_event.occurred_at_processed" resname="tx_wise_domain_model_event.occurred_at_processed">
+				<source>Occured at processed</source>
+			</trans-unit>
 			<trans-unit id="tx_wise_domain_model_credit" resname="tx_wise_domain_model_credit">
 				<source>Credit</source>
 			</trans-unit>
@@ -39,6 +42,9 @@
 			</trans-unit>
 			<trans-unit id="tx_wise_domain_model_credit.date" resname="tx_wise_domain_model_credit.date">
 				<source>Date</source>
+			</trans-unit>
+			<trans-unit id="tx_wise_domain_model_credit.date_processed" resname="tx_wise_domain_model_credit.date_processed">
+				<source>Date processed</source>
 			</trans-unit>
 			<trans-unit id="tx_wise_domain_model_credit.amount_value" resname="tx_wise_domain_model_credit.amount_value">
 				<source>Amount</source>
