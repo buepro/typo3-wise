@@ -11,8 +11,26 @@ declare(strict_types=1);
 
 namespace Buepro\Wise\Domain\Repository;
 
+use TYPO3\CMS\Core\Database\ConnectionPool;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Persistence\Repository;
 
 class CreditRepository extends Repository
 {
+    /**
+     * @return false|mixed[]
+     * @throws \Doctrine\DBAL\DBALException
+     * @throws \Doctrine\DBAL\Driver\Exception
+     */
+    public function findLatest()
+    {
+        return GeneralUtility::makeInstance(ConnectionPool::class)
+            ->getQueryBuilderForTable('tx_wise_domain_model_credit')
+            ->select('*')
+            ->from('tx_wise_domain_model_credit')
+            ->orderBy('date_processed', 'DESC')
+            ->setMaxResults(1)
+            ->executeQuery()
+            ->fetchAssociative();
+    }
 }

@@ -56,10 +56,8 @@ class GetCreditsCommand extends Command
     {
         $this
             ->setDescription(
-                'Get credit transactions from a wise account. In case no option is used
-transactions for one month back and all sites are obtained. By default the period
-for which transactions are received is one month. Use the options "from" and "to"
-to adjust the period. Note that the maximal period length is limited by the wise API.'
+                'Get credit transactions from a wise account for all sites.
+See as well https://api-docs.transferwise.com/#balance-account-get-balance-account-statement'
             )
             ->addOption(
                 'from',
@@ -67,7 +65,10 @@ to adjust the period. Note that the maximal period length is limited by the wise
                 InputOption::VALUE_REQUIRED,
                 'Date defining from when on credit transactions should be
 obtained. The PHP function "strtotime" is used to get
-the timestamp.'
+the timestamp. Defaults to the time from the latest
+registered credit record. In case no record exists one
+month back from the resulting time defined by the to
+option is used.'
             )
             ->addOption(
                 'to',
@@ -75,21 +76,23 @@ the timestamp.'
                 InputOption::VALUE_REQUIRED,
                 'Date defining upto when credit transactions should be
 obtained. The PHP function "strtotime" is used to get
-the timestamp.'
+the timestamp. Defaults to current time.'
             )
             ->addOption(
                 'site',
                 's',
                 InputOption::VALUE_REQUIRED,
                 'Site identifier from the site for which credit transactions
-should be obtained.'
+should be obtained. Without this option all sites are
+included.'
             )
             ->addOption(
                 'profile-id',
                 'p',
                 InputOption::VALUE_REQUIRED,
                 "Profile-ID for which credit transactions should be received.
-If not used profile id's are obtained by the registered events."
+If not used profile id's are obtained by the registered
+events."
             );
     }
 
@@ -174,6 +177,9 @@ If not used profile id's are obtained by the registered events."
         ) {
             return ((new \DateTime)->setTimestamp($timestamp))->sub(new \DateInterval('P1M'))->getTimestamp();
         }
+        if (($latest = $this->creditRepository->findLatest()) !== false) {
+            return (new \DateTime($latest['date']))->sub(new \DateInterval('P1D'))->getTimestamp();
+        }
         return (new \DateTime('now'))->sub(new \DateInterval('P1M'))->getTimestamp();
     }
 
@@ -184,12 +190,6 @@ If not used profile id's are obtained by the registered events."
             ($timestamp = strtotime($toDate)) !== false
         ) {
             return $timestamp;
-        }
-        if (
-            ($fromDate = $input->getOption('from')) !== null &&
-            ($timestamp = strtotime($fromDate)) !== false
-        ) {
-            return ((new \DateTime)->setTimestamp($timestamp))->add(new \DateInterval('P1M'))->getTimestamp();
         }
         return (new \DateTime('now'))->getTimestamp();
     }
