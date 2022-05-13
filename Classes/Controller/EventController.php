@@ -40,7 +40,7 @@ class EventController
             $this->eventRepository->add($event);
             GeneralUtility::makeInstance(PersistenceManager::class)->persistAll();
         }
-        (new CommandService())->getCreditsInBackground();
+        (GeneralUtility::makeInstance(CommandService::class))->getCreditsInBackground();
         return $this->getConfirmationResponse();
     }
 

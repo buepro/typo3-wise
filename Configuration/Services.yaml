@@ -9,6 +9,8 @@ services:
 
   Buepro\Wise\Controller\EventController:
     public: true
+  Buepro\Wise\Service\CommandService:
+    public: true
   Buepro\Wise\Service\EventService:
     public: true
   Buepro\Wise\Api\Client:

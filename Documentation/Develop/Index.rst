@@ -16,6 +16,25 @@ Site
 -  Create the key files in `Build/site/wise`
    (see :ref:`Administration - Public and private keys <admin_keys>`)
 
+Logging
+=======
+
+.. code-block:: php
+
+   $GLOBALS['TYPO3_CONF_VARS']['LOG']['Buepro']['Wise']['writerConfiguration'] = [
+       \TYPO3\CMS\Core\Log\LogLevel::DEBUG => [
+           \TYPO3\CMS\Core\Log\Writer\FileWriter::class => [
+               'logFile' => \TYPO3\CMS\Core\Core\Environment::getVarPath() . '/log/wise.log'
+           ],
+       ],
+       // Configuration for WARNING severity, including all
+       // levels with higher severity (ERROR, CRITICAL, EMERGENCY)
+       \TYPO3\CMS\Core\Log\LogLevel::WARNING => [
+           \TYPO3\CMS\Core\Log\Writer\SyslogWriter::class => [],
+       ],
+   ];
+
+
 Various
 =======
 
