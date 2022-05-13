@@ -103,6 +103,9 @@ If not used profile id's are obtained by the registered events."
         }
 
         foreach ($sites as $site) {
+            if (!isset($site->getConfiguration()['wise'])) {
+                continue;
+            }
             $unreferencedEvents = $this->eventRepository->findAllUnreferenced($site);
             $profileIds = $this->eventRepository->findAllProfileIds($site);
             $from = $this->getFromTimestamp($input);
