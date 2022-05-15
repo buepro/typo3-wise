@@ -15,7 +15,7 @@ Console
    path/to/bin/typo3 wise:getcredits -h
 
 .. code-block:: shell
-   :caption: Get credit transactions one month back and for all sites
+   :caption: Get credit transactions for all sites and all profile id's. The from time is derived from the last transaction record. In case no record is available the from time is one month back from now.
 
    path/to/bin/typo3 wise:getcredits
 
@@ -30,12 +30,12 @@ Console
    path/to/bin/typo3 wise:getcredits -p 1234567
 
 .. code-block:: shell
-   :caption: Get credit transactions for the period 06.05.2022 - 06.06.2022
+   :caption: Get credit transactions for the period 06.05.2022 - now
 
    path/to/bin/typo3 wise:getcredits -f 06.05.2022
 
 .. code-block:: shell
-   :caption: Get credit transactions for the period 06.05.2022 - 06.06.2022
+   :caption: Get credit transactions until 06.06.2022
 
    path/to/bin/typo3 wise:getcredits -t 06.06.2022
 
