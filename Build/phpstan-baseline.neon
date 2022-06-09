@@ -1,0 +1,22 @@
+parameters:
+	ignoreErrors:
+		-
+			message: "#^Foreach overwrites \\$profileId with its value variable\\.$#"
+			count: 1
+			path: ../Classes/Command/GetCreditsCommand.php
+
+		-
+			message: "#^Call to an undefined method Buepro\\\\Wise\\\\Domain\\\\Repository\\\\CreditRepository\\:\\:findByReferenceNumber\\(\\)\\.$#"
+			count: 1
+			path: ../Classes/Service/CreditService.php
+
+		-
+			message: "#^Parameter \\#1 \\$pid of method TYPO3\\\\CMS\\\\Extbase\\\\DomainObject\\\\AbstractDomainObject\\:\\:setPid\\(\\) expects int, int\\|null given\\.$#"
+			count: 1
+			path: ../Classes/Service/CreditService.php
+
+		-
+			message: "#^Call to an undefined method Buepro\\\\Wise\\\\Domain\\\\Repository\\\\AbstractRepository\\:\\:findByDeliveryId\\(\\)\\.$#"
+			count: 1
+			path: ../Classes/Service/EventService.php
+

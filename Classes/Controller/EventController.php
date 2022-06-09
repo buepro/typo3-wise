@@ -12,11 +12,13 @@ declare(strict_types=1);
 namespace Buepro\Wise\Controller;
 
 use Buepro\Wise\Domain\Repository\EventRepository;
+use Buepro\Wise\Service\ApiService;
 use Buepro\Wise\Service\CommandService;
 use Buepro\Wise\Service\EventService;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use TYPO3\CMS\Core\Http\ResponseFactory;
+use TYPO3\CMS\Core\Site\Entity\Site;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Persistence\Generic\PersistenceManager;
 
@@ -35,9 +37,11 @@ class EventController
     {
         if (
             ($eventService = GeneralUtility::makeInstance(EventService::class))->requestValid($request) &&
-            ($event = $eventService->getEvent($request)) !== null
+            ($event = $eventService->getEvent($request)) !== null &&
+            ($site = $request->getAttribute('site')) instanceof Site &&
+            ($storageUids = (new ApiService())->getStorageUidArray($site)) !== []
         ) {
-            $this->eventRepository->add($event);
+            $this->eventRepository->setQuerySettings($storageUids)->add($event);
             GeneralUtility::makeInstance(PersistenceManager::class)->persistAll();
         }
         (GeneralUtility::makeInstance(CommandService::class))->getCreditsInBackground();

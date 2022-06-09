@@ -51,8 +51,10 @@ class EventService
             $decoded['event_type'] === 'balances#credit' &&
             is_array($data = $decoded['data'] ?? null) &&
             ($pid = $this->apiService->getStorageUid($site)) !== null &&
-            // @phpstan-ignore-next-line
-            $this->eventRepository->findByDeliveryId($request->getHeaderLine('x-delivery-id'))->getFirst() === null
+            $this->eventRepository
+                ->setQuerySettings($this->apiService->getStorageUidArray($site))
+                ->findByDeliveryId($request->getHeaderLine('x-delivery-id'))
+                ->getFirst() === null
         ) {
             $event = new Event();
             $event

@@ -13,6 +13,7 @@ use Buepro\Wise\Api\Client;
 use Buepro\Wise\Domain\Repository\CreditRepository;
 use Buepro\Wise\Domain\Repository\EventRepository;
 use Buepro\Wise\Event\AfterAddingCreditsEvent;
+use Buepro\Wise\Service\ApiService;
 use Buepro\Wise\Service\CreditService;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
@@ -106,9 +107,11 @@ events."
         }
 
         foreach ($sites as $site) {
-            if (!isset($site->getConfiguration()['wise'])) {
+            if (($storageUids = (new ApiService())->getStorageUidArray($site)) === []) {
                 continue;
             }
+            $this->eventRepository->setQuerySettings($storageUids);
+            $this->creditRepository->setQuerySettings($storageUids);
             $unreferencedEvents = $this->eventRepository->findAllUnreferenced($site);
             $profileIds = $this->eventRepository->findAllProfileIds($site);
             $from = $this->getFromTimestamp($input);
@@ -118,7 +121,6 @@ events."
                 $profileIds = [$profileId];
             }
 
-            // @phpstan-ignore-next-line
             foreach ($profileIds as $profileId) {
                 $apiClient = (GeneralUtility::makeInstance(Client::class))->initialize($site, $profileId);
                 $balanceAccountStatement = $apiClient->getBalanceAccountStatement($from, $to);

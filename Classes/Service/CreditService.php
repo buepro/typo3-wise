@@ -36,9 +36,11 @@ class CreditService
 
     public function processTransactions(array $transactions, Site $site, ?array $unreferencedEvents = null): void
     {
-        if (($pid = (new ApiService())->getStorageUid($site)) === null) {
+        if (($storageUids = ($apiService = new ApiService())->getStorageUidArray($site)) === []) {
             return;
         }
+        $this->eventRepository->setQuerySettings($storageUids);
+        $this->creditRepository->setQuerySettings($storageUids);
         $transactions = array_filter($transactions, static fn ($t) => $t['type'] === 'CREDIT');
         uasort(
             $transactions,
@@ -51,7 +53,6 @@ class CreditService
         $unreferencedEvents = $this->indexUnreferencedEvents($unreferencedEvents);
 
         foreach ($transactions as $transaction) {
-            // @phpstan-ignore-next-line
             if ($this->creditRepository->findByReferenceNumber($transaction['referenceNumber'])->getFirst() !== null) {
                 continue;
             }
@@ -72,7 +73,7 @@ class CreditService
                 ->setExchangeDetails((string)$transaction['exchangeDetails'])
                 ->setRunningBalanceValue($transaction['runningBalance']['value'])
                 ->setRunningBalanceCurrency($transaction['runningBalance']['currency'])
-                ->setPid($pid);
+                ->setPid($apiService->getStorageUid($site));
             if (($event = $this->getEventForTransaction($unreferencedEvents, $transaction)) instanceof Event) {
                 $credit->setEvent($event);
                 unset($unreferencedEvents[$event->getUid()]);
