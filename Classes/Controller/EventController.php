@@ -35,24 +35,27 @@ class EventController
 
     public function handleEvent(ServerRequestInterface $request): ResponseInterface
     {
+        if (!(($site = $request->getAttribute('site')) instanceof Site)) {
+            return $this->getResponse('Request not processed. Check site configuration.');
+        }
         if (
             ($eventService = GeneralUtility::makeInstance(EventService::class))->requestValid($request) &&
             ($event = $eventService->getEvent($request)) !== null &&
-            ($site = $request->getAttribute('site')) instanceof Site &&
             ($storageUids = (new ApiService())->getStorageUidArray($site)) !== []
         ) {
             $this->eventRepository->setQuerySettings($storageUids)->add($event);
             GeneralUtility::makeInstance(PersistenceManager::class)->persistAll();
         }
-        (GeneralUtility::makeInstance(CommandService::class))->getCreditsInBackground();
-        return $this->getConfirmationResponse();
+        $binDirectory = $site->getConfiguration()['wise']['binDirectory'] ?? null;
+        (GeneralUtility::makeInstance(CommandService::class))->getCreditsInBackground($binDirectory);
+        return $this->getResponse('Received, tank you.');
     }
 
-    public function getConfirmationResponse(): ResponseInterface
+    public function getResponse(string $text): ResponseInterface
     {
         $response = $this->responseFactory->createResponse()
             ->withHeader('Content-Type', 'text/plain; charset=utf-8');
-        $response->getBody()->write('Received, tank you.');
+        $response->getBody()->write($text);
         return $response;
     }
 }

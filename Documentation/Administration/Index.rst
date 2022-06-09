@@ -36,6 +36,9 @@ Site configuration
 #. Create a read only API token in your wise account (see below) and assign its
    key to the property `wise.apiTokenKey`.
 
+#. Optionally define the directory where the typo3 command is located in the
+   property `wise.binDirectory`
+
 
 .. code-block:: yaml
    :caption: Example wise properties in site configuration
@@ -44,6 +47,7 @@ Site configuration
      eventUrlSegmentChallenge: wdoufkyrkLoqaarxxvmdxyyj
      storageUid: 1
      apiTokenKey: '11111111-1111-1111-1111-111111111111'
+     binDirectory: ../vendor/bin
 
 .. _admin_wise_account:
 
