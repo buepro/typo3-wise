@@ -107,6 +107,7 @@ events."
         }
 
         foreach ($sites as $site) {
+            $initialCreditsCount = count($this->creditService->getAddedCredits());
             if (($storageUids = (new ApiService())->getStorageUidArray($site)) === []) {
                 continue;
             }
@@ -129,6 +130,11 @@ events."
                 }
                 $this->creditService->processTransactions($transactions, $site, $unreferencedEvents);
             }
+            $io->writeln(sprintf(
+                '- Site "%s": %d credits added',
+                $site->getIdentifier(),
+                count($this->creditService->getAddedCredits()) - $initialCreditsCount
+            ));
         }
 
         if (count($addedCredits = $this->creditService->getAddedCredits()) > 0) {
@@ -137,7 +143,7 @@ events."
         }
 
         $io->writeln(sprintf(
-            '%d credits added.',
+            'All sites: %d credits added',
             count($this->creditService->getAddedCredits())
         ));
         return Command::SUCCESS;
