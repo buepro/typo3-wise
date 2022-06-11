@@ -47,7 +47,8 @@ class EventController
             GeneralUtility::makeInstance(PersistenceManager::class)->persistAll();
         }
         $binDirectory = $site->getConfiguration()['wise']['binDirectory'] ?? null;
-        (GeneralUtility::makeInstance(CommandService::class))->getCreditsInBackground($binDirectory);
+        $postEventCommand = $site->getConfiguration()['wise']['postEventCommand'] ?? null;
+        (GeneralUtility::makeInstance(CommandService::class))->getCreditsInBackground($binDirectory, $postEventCommand);
         return $this->getResponse('Received, tank you.');
     }
 

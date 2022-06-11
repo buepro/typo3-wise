@@ -36,18 +36,41 @@ Site configuration
 #. Create a read only API token in your wise account (see below) and assign its
    key to the property `wise.apiTokenKey`.
 
-#. Optionally define the directory where the typo3 command is located in the
+#. Optionally define the directory where the typo3 command is located with the
    property `wise.binDirectory`
+
+#. Optionally define a post event command to be executed in a background
+   process by assigning it to the property `wise.postEventCommand`. The post
+   event command overwrites the automatic created command hence as well the
+   property `wise.binDirectory` has no effect any more.
 
 
 .. code-block:: yaml
-   :caption: Example wise properties in site configuration
+   :caption: Example configuration from REQUIRED wise properties
 
    wise:
      eventUrlSegmentChallenge: wdoufkyrkLoqaarxxvmdxyyj
      storageUid: 1
      apiTokenKey: '11111111-1111-1111-1111-111111111111'
+
+.. code-block:: yaml
+   :caption: Example configuration from OPTIONAL wise properties
+
+   wise:
      binDirectory: ../vendor/bin
+     postEventCommand: "/path/to/php -f '../path/to/bin/typo3' -- 'wise:getcredits' > /dev/null 2>&1 &"
+
+.. note::
+
+   In case new credit records aren't created upon receiving an event there
+   might be two reasons for it:
+
+   -  Wise delayed the availability from the credit transaction -> the
+      The transaction might be pulled in after five minutes.
+
+   -  The command used to get the credit transactions didn't work. To further
+      find out details about it the command details can be obtained by
+      activation the debug logging (see :ref:`develop-logging`).
 
 .. _admin_wise_account:
 

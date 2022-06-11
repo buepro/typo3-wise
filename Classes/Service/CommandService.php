@@ -21,13 +21,15 @@ class CommandService
         $this->logger = $logger;
     }
 
-    public function getCreditsInBackground(?string $binDirectory = null): void
+    public function getCreditsInBackground(?string $binDirectory = null, ?string $postEventCommand = null): void
     {
-        if (($cmd = $this->getTypo3Command($binDirectory)) === null) {
+        $this->logger->debug('Start to get credits in background', ['binDirectory' => $binDirectory, 'postEventCommand' => $postEventCommand]);
+        $cmd = $postEventCommand ?? $this->getCommand($binDirectory);
+        if ($cmd === null) {
+            $this->logger->debug('Command to get credits in background could not be obtained.');
             return;
         }
         if (Environment::isUnix()) {
-            $cmd .= ' wise:getcredits > /dev/null 2>&1 &';
             $result = exec($cmd, $output, $resultCode);
             $this->logger->debug('Unix command "{cmd}" executed', [
                 'result' => $result,
@@ -36,12 +38,24 @@ class CommandService
                 'cmd' => $cmd,
             ]);
         } else {
-            $cmd = '"wise" "' . $cmd . '" wise:getcredits';
-            if (($handle = popen('start /B ' . $cmd, 'r')) !== false) {
+            if (($handle = popen($cmd, 'r')) !== false) {
                 pclose($handle);
             }
             $this->logger->debug('Windows command "{cmd}" executed.', ['cmd' => $cmd]);
         }
+    }
+
+    private function getCommand(?string $binDirectory = null): ?string
+    {
+        if (($cmd = $this->getTypo3Command($binDirectory)) === null) {
+            return null;
+        }
+        if (Environment::isUnix()) {
+            $cmd .= ' wise:getcredits > /dev/null 2>&1 &';
+        } else {
+            $cmd = 'start /B "wise" "' . $cmd . '" wise:getcredits';
+        }
+        return $cmd;
     }
 
     private function getTypo3Command(?string $binDirectory = null): ?string

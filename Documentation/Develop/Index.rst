@@ -8,6 +8,8 @@ Develop
 
 This chapter is of interest when developing this extension further.
 
+.. _develop-site:
+
 Site
 ====
 
@@ -15,6 +17,8 @@ Site
    (see :ref:`Administration - Site configuration <admin_site_configuration>`)
 -  Create the key files in `Build/site/wise`
    (see :ref:`Administration - Public and private keys <admin_keys>`)
+
+.. _develop-logging:
 
 Logging
 =======
@@ -27,18 +31,16 @@ Logging
                'logFile' => \TYPO3\CMS\Core\Core\Environment::getVarPath() . '/log/wise.log'
            ],
        ],
-       // Configuration for WARNING severity, including all
-       // levels with higher severity (ERROR, CRITICAL, EMERGENCY)
-       \TYPO3\CMS\Core\Log\LogLevel::WARNING => [
-           \TYPO3\CMS\Core\Log\Writer\SyslogWriter::class => [],
-       ],
    ];
 
+.. _develop-various:
 
 Various
 =======
 
 -  Expose dev server: `ddev share`
+
+.. _develop-references:
 
 References
 ==========
