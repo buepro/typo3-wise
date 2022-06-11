@@ -28,6 +28,15 @@ Wise
 :Rendered:
    |today|
 
+----
+
+Use this extension to register and process credit transactions from a wise
+account. With the provided event handler or a cron job the latest credit
+transactions can be automatically pulled into your TYPO3 instance. Once new
+credit transactions have been added an event for further processing is
+dispatched.
+
+----
 
 **Table of Contents**
 
@@ -36,6 +45,15 @@ Wise
 
    Introduction/Index
    Administration/Index
+   Configuration/Site
    User/Index
-   Integration/Index
+   API/Index
    Develop/Index
+
+.. Meta Menu
+
+.. toctree::
+   :hidden:
+
+   Sitemap
+   genindex

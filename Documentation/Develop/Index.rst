@@ -14,9 +14,9 @@ Site
 ====
 
 -  Create `Build/site/wise/private.yaml` with wise related properties
-   (see :ref:`Administration - Site configuration <admin_site_configuration>`)
+   (see :ref:`Administration - Site configuration <admin>`)
 -  Create the key files in `Build/site/wise`
-   (see :ref:`Administration - Public and private keys <admin_keys>`)
+   (see :ref:`Administration - Keys files <admin>`)
 
 .. _develop-logging:
 

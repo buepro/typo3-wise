@@ -1,10 +1,12 @@
 .. include:: /Includes.rst.txt
 
-.. _user_manual:
+.. _user-manual:
 
 ===========
 User manual
 ===========
+
+.. _user-manual-console:
 
 Console
 =======

@@ -26,8 +26,30 @@
 Introduction
 ============
 
-Use this extension to register and process credit transactions from a wise
-account. With the provided event handler or a cron job the latest credit
-transactions can be automatically pulled into your TYPO3 instance. Once new
-credit transactions have been added an event for further processing is
-dispatched.
+.. _introduction-screenshots:
+
+Screenshots
+===========
+
+.. figure:: ../Images/Records.jpg
+   :alt: Event and credit records
+
+   Event and credit records
+
+.. _ introduction-console-commands:
+
+Console commands
+================
+
+Following a view sample commands are presented. More examples can be found in
+the :ref:`user manual <user-manual-console>`.
+
+.. code-block:: shell
+   :caption: Get credit transactions for all sites and all profile id's. The from time is derived from the last transaction record. In case no record is available the from time is one month back from now.
+
+   path/to/bin/typo3 wise:getcredits
+
+.. code-block:: shell
+   :caption: Get credit transactions for the period 06.05.2022 - now
+
+   path/to/bin/typo3 wise:getcredits -f 06.05.2022
