@@ -100,12 +100,13 @@ events."
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $io = new SymfonyStyle($input, $output);
-        $io->writeln('Getting the latest credit transactions...');
 
         if (($sites = $this->getSites($input, $io)) === null) {
+            $io->writeln('No site available. Please check the site configuration.');
             return Command::INVALID;
         }
 
+        $io->writeln('Getting the latest credit transactions...');
         foreach ($sites as $site) {
             $initialCreditsCount = count($this->creditService->getAddedCredits());
             if (($storageUids = (new ApiService())->getStorageUidArray($site)) === []) {
@@ -142,10 +143,6 @@ events."
             $this->eventDispatcher->dispatch((new AfterAddingCreditsEvent($addedCredits)));
         }
 
-        $io->writeln(sprintf(
-            'All sites: %d credits added',
-            count($this->creditService->getAddedCredits())
-        ));
         return Command::SUCCESS;
     }
 
