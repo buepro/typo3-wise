@@ -48,6 +48,7 @@ dispatched.
    Configuration/Site
    User/Index
    API/Index
+   Changelog/Index
    Develop/Index
 
 .. Meta Menu
