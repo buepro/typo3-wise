@@ -180,7 +180,7 @@ events."
             ($toDate = $input->getOption('to')) !== null &&
             ($timestamp = strtotime($toDate)) !== false
         ) {
-            return ((new \DateTime)->setTimestamp($timestamp))->sub(new \DateInterval('P1M'))->getTimestamp();
+            return (new \DateTime)->setTimestamp($timestamp)->sub(new \DateInterval('P1M'))->getTimestamp();
         }
         if (($latest = $this->creditRepository->findLatest()) !== false) {
             return (new \DateTime($latest['date']))->sub(new \DateInterval('P1D'))->getTimestamp();
