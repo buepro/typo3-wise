@@ -56,23 +56,26 @@ class CreditService
             if ($this->creditRepository->findByReferenceNumber($transaction['referenceNumber'])->getFirst() !== null) {
                 continue;
             }
+            if (($transaction['referenceNumber'] ?? '') === '') {
+                throw new \LogicException('The transaction doesn\'t contain a reference', 1669912238);
+            }
             $credit = new Credit();
             $credit
                 ->setReferenceNumber($transaction['referenceNumber'])
-                ->setDate($transaction['date'])
+                ->setDate($transaction['date'] ?? '')
                 ->setDateProcessed((new \DateTime($transaction['date']))->getTimestamp())
-                ->setAmountValue($transaction['amount']['value'])
-                ->setAmountCurrency($transaction['amount']['currency'])
-                ->setTotalFeesValue($transaction['totalFees']['value'])
-                ->setTotalFeesCurrency($transaction['totalFees']['currency'])
-                ->setDetailsType($transaction['details']['type'])
-                ->setDetailsDescription($transaction['details']['description'])
-                ->setDetailsSenderName($transaction['details']['senderName'])
-                ->setDetailsSenderAccount($transaction['details']['senderAccount'])
-                ->setDetailsPaymentReference($transaction['details']['paymentReference'])
-                ->setExchangeDetails((string)$transaction['exchangeDetails'])
-                ->setRunningBalanceValue($transaction['runningBalance']['value'])
-                ->setRunningBalanceCurrency($transaction['runningBalance']['currency'])
+                ->setAmountValue($transaction['amount']['value'] ?? 0)
+                ->setAmountCurrency($transaction['amount']['currency'] ?? '')
+                ->setTotalFeesValue($transaction['totalFees']['value'] ?? 0)
+                ->setTotalFeesCurrency($transaction['totalFees']['currency'] ?? '')
+                ->setDetailsType($transaction['details']['type'] ?? '')
+                ->setDetailsDescription($transaction['details']['description'] ?? '')
+                ->setDetailsSenderName($transaction['details']['senderName'] ?? '')
+                ->setDetailsSenderAccount($transaction['details']['senderAccount'] ?? '')
+                ->setDetailsPaymentReference($transaction['details']['paymentReference'] ?? '')
+                ->setExchangeDetails((string)$transaction['exchangeDetails'] ?? '')
+                ->setRunningBalanceValue($transaction['runningBalance']['value'] ?? 0)
+                ->setRunningBalanceCurrency($transaction['runningBalance']['currency'] ?? '')
                 ->setPid($apiService->getStorageUid($site));
             if (($event = $this->getEventForTransaction($unreferencedEvents, $transaction)) instanceof Event) {
                 $credit->setEvent($event);
