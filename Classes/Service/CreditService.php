@@ -73,7 +73,7 @@ class CreditService
                 ->setDetailsSenderName($transaction['details']['senderName'] ?? '')
                 ->setDetailsSenderAccount($transaction['details']['senderAccount'] ?? '')
                 ->setDetailsPaymentReference($transaction['details']['paymentReference'] ?? '')
-                ->setExchangeDetails((string)$transaction['exchangeDetails'] ?? '')
+                ->setExchangeDetails((string)json_encode($transaction['exchangeDetails'] ?? []))
                 ->setRunningBalanceValue($transaction['runningBalance']['value'] ?? 0)
                 ->setRunningBalanceCurrency($transaction['runningBalance']['currency'] ?? '')
                 ->setPid($apiService->getStorageUid($site));
